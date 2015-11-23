@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Assignment 2 - Lab Report by drmblog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Assignment 2 - Lab Report</h1>
+      <h2 class="project-tagline">#EURDRM2015</h2>
+      <a href="https://github.com/drmblog/report-2" class="btn">View on GitHub</a>
+      <a href="https://github.com/drmblog/report-2/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/drmblog/report-2/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction:</h1>
+
+<p>Each year UEFA Champions League is trending across the web in news, blogs and user searches. This year is <a href="https://www.google.com/trends/explore#q=%2Fm%2F0c1q0&amp;cmpt=q&amp;tz=Etc%2FGMT-1">no exception</a>. For the purpose of this assignment I decided to look at discussions in Twitter medium related to one of the biggest annual football competition. More specifically I was interested in how users react to the Champions League and what is the trending mood of publications related to the topic. One of the most convenient ways to answer this question is to carry out sentiment analysis.</p>
+
+<hr>
+
+<h1>
+<a id="data-gathering-and-preprocessing" class="anchor" href="#data-gathering-and-preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Gathering and preprocessing</h1>
+
+<p>In order to retrieve data needed for the analysis several tools were used:</p>
+
+<ul>
+<li>
+<a href="http://www.tableau.com/">Tableau software</a>, extended by <a href="http://tableaujunkie.com/post/119681578798/creating-a-twitter-web-data-connector">Twitter Web Data Connector</a> </li>
+<li><a href="https://products.office.com/en-us/excel">Microsoft Office Excel</a></li>
+<li><a href="http://wiki.contextgarden.net/Main_Page">ContText</a></li>
+</ul>
+
+<p>Twitter Web Data Connector enables Tableau users to scrape most actual data from Twitter according to the indicated query. In this case, data was scraped using the <em>«Champions League»</em> term. After raw data was collected a <em>status text</em> dimension was loaded in the spreadsheet. Analysis of existing data however would not make sense, as raw results featured publications in different languages. For this reason new quick filter was created based on  the <em>language</em> dimension. Only <em>english language</em> checkbox was selected in the filter settings to get publications exclusively in english language.</p>
+
+<p><img src="https://github.com/drmblog/report-2/blob/master/images/Figure%201.png?raw=true" alt="Figure 1"></p>
+
+<p>After that the data was exported to Excel spreadsheet using 
+<code>Worksheet - export - crosstab to Excel</code> function in Tableau. The Excel environment was used to preprocess the data and get rid of unimportant characters. It was done by an integrated <code>clean</code> function. After all the modifications took place, corpus was saved as a new file with <em>.txt</em> extension. </p>
+
+<p>The next step taken in data preprocessing chain was removal of <em>stop-words</em> from existing corpus. In order to achieve that, the corpus was loaded in ConText software and appropriate function was used: <code>Text analysis - Preprocessing -  Remove Stop Words</code>. The outputs of operation were saved to a new file. </p>
+
+<hr>
+
+<h1>
+<a id="data-analysis-and-results" class="anchor" href="#data-analysis-and-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data analysis and results</h1>
+
+<p>The analysis of corpus took place in the ConText software as well, with the implementation of <code>Text analysis - Summarization - Sentiment Analysis</code> function. </p>
+
+<p><img src="https://github.com/drmblog/report-2/blob/master/images/Figure4.png?raw=true" alt="Figure 4"></p>
+
+<p>The outcomes of an analysis that come in <em>.csv</em> file were loaded in Tableau software. In order for data to be properly analyzed and to be spread in separate columns, there was a need to use <code>split</code> function (activated as an option after right click on initial row in the spreadsheet). All the columns were renamed manually, according to the dimensions and values they represent, as software did not automate this process. </p>
+
+<p><img src="https://github.com/drmblog/report-2/blob/master/images/Figure5.png?raw=true" alt="Figure5"></p>
+
+<p>Few transformations had to be made in order to know, what was the dominating sentiment in the data. As ConText software captures the term, its sentiment and its frequency - the <em>frequency dimension</em> had to be transformed into <em>measure</em>. This provided the possibility to see the <em>sum of frequency</em> for each of the sentiments and provide proper visual results. </p>
+
+<p>Based on those results it is possible to see that even though the amount of captured positive sentiments were bigger than negative ones, the count of sentiments frequency in the corpus reveals that totally it was more negative. </p>
+
+<p><img src="https://github.com/drmblog/report-2/blob/master/images/Figure6.png?raw=true" alt="Figure 6"></p>
+
+<p>The type of data captured also allowed to experiment with the <em>packed bubble</em> visualization for each term. The <em>sentiment dimension</em> was used as a quick filter to get different visualizations for negative and positive sentiments. </p>
+
+<p><img src="https://github.com/drmblog/report-2/blob/master/images/Figure7.png?raw=true" alt="Figure 7">
+<img src="https://github.com/drmblog/report-2/blob/master/images/Figure8.png?raw=true" alt="Figure 8"></p>
+
+<p>Even though the research question was already answered another part of corpus analysis was executed. The final step concentrated on topic modeling. This was done with the help of ConText software and its integrated function: <code>Text analysis - Summarisation - Topic Modelling</code>. The <em>number of topics</em> was set to 10. The same counter was applied to the <em>number of words per topic</em> field. The <em>number of iterations</em> was set to 700. </p>
+
+<p>The result of topic modeling were not good enough and required additional cycles of <em>stop-word</em> removal process. This was obvious as some of the topics featured irrelevant information, for example parts of an interactive links such as "https".</p>
+
+<hr>
+
+<h1>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+
+<p>The workflow between Tableau and ConText software is pretty straightforward, however requires some additional modifications of data. Moreover, if researches want to move further than sentiments analysis a more complex approach has to be applied to data and more attention has to be devoted to preprocessing part. </p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/drmblog/report-2">Assignment 2 - Lab Report</a> is maintained by <a href="https://github.com/drmblog">drmblog</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
